@@ -1,5 +1,5 @@
 val projectName    = "TeleQRamer"
-val projectVersion = "0.0.1"
+val projectVersion = "0.1.0"
 
 def scalaFixSettings = Seq(
   semanticdbEnabled := true,

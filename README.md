@@ -1,0 +1,1 @@
+# TeleQRamerThis project is a game and not should be taken as a serious development.
