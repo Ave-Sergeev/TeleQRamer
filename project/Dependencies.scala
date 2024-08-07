@@ -7,6 +7,8 @@ object Dependencies {
     val zio          = "2.1.6"
     val zioJson      = "0.7.1"
     val zioCats      = "23.1.0.2"
+    val zioRedis     = "0.2.0+99-bcdad164-SNAPSHOT"
+    val zioSchema    = "1.3.0"
     val zioConfig    = "4.0.2"
     val zioLogging   = "2.3.0"
     val scalaLogging = "3.9.5"
@@ -27,11 +29,17 @@ object Dependencies {
   }
 
   object ZIO {
-    lazy val core    = "dev.zio" %% "zio"              % Version.zio
-    lazy val macros  = "dev.zio" %% "zio-macros"       % Version.zio
-    lazy val streams = "dev.zio" %% "zio-streams"      % Version.zio
-    lazy val cats    = "dev.zio" %% "zio-interop-cats" % Version.zioCats
-    lazy val json    = "dev.zio" %% "zio-json"         % Version.zioJson
+    lazy val core         = "dev.zio" %% "zio"                   % Version.zio
+    lazy val macros       = "dev.zio" %% "zio-macros"            % Version.zio
+    lazy val streams      = "dev.zio" %% "zio-streams"           % Version.zio
+    lazy val cats         = "dev.zio" %% "zio-interop-cats"      % Version.zioCats
+    lazy val json         = "dev.zio" %% "zio-json"              % Version.zioJson
+    lazy val redis        = "dev.zio" %% "zio-redis"             % Version.zioRedis
+    lazy val redisEmb     = "dev.zio" %% "zio-redis-embedded"    % Version.zioRedis % Test
+    lazy val schema       = "dev.zio" %% "zio-schema"            % Version.zioSchema
+    lazy val schemaPb     = "dev.zio" %% "zio-schema-protobuf"   % Version.zioSchema
+    lazy val schemaJson   = "dev.zio" %% "zio-schema-json"       % Version.zioSchema
+    lazy val schemaDerive = "dev.zio" %% "zio-schema-derivation" % Version.zioSchema
   }
 
   object CONFIG {
@@ -58,8 +66,14 @@ object Dependencies {
     ZIO.core,
     ZIO.cats,
     ZIO.json,
+    ZIO.redis,
     ZIO.macros,
+    ZIO.schema,
     ZIO.streams,
+    ZIO.redisEmb,
+    ZIO.schemaPb,
+    ZIO.schemaJson,
+    ZIO.schemaDerive,
     LOGS.sl4j,
     LOGS.logback,
     LOGS.zioLogging,

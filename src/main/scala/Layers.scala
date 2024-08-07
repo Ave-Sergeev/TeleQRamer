@@ -1,5 +1,6 @@
 import config.AppConfig
-import telegram.{TGBot, TGClient}
+import service.qr.QR
+import service.telegram.{TGBot, TGClient}
 import zio.Scope
 
 object Layers {
@@ -8,9 +9,10 @@ object Layers {
 
   private val base = AppConfig.live
 
+  private val services = QR.live >+> TGClient.live >+> TGBot.live
+
   val all =
     runtime >+>
       base >+>
-      TGClient.live >+>
-      TGBot.live
+      services
 }

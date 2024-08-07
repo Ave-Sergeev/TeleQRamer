@@ -15,6 +15,10 @@ def scalafmtSettings = Seq(
     .value
 )
 
+resolvers ++= List(
+  "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+)
+
 lazy val root = (project in file("."))
   .enablePlugins(PackPlugin)
   .enablePlugins(ScalafixPlugin)

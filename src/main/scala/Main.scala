@@ -1,4 +1,4 @@
-import telegram.TGBot
+import service.telegram.TGBot
 import zio.Console.printLine
 import zio.logging.backend.SLF4J
 import zio.{ZIOAppDefault, _}
