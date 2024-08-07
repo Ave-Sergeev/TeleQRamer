@@ -4,9 +4,10 @@ object Dependencies {
 
   object Version {
     val scala        = "2.13.11"
-    val zio          = "2.1.6"
+    val zio          = "2.1.7"
     val zioJson      = "0.7.1"
     val zioCats      = "23.1.0.2"
+    val zioHttp      = "3.0.0-RC6"
     val zioRedis     = "0.2.0+99-bcdad164-SNAPSHOT"
     val zioSchema    = "1.3.0"
     val zioConfig    = "4.0.2"
@@ -18,6 +19,9 @@ object Dependencies {
     val canoe        = "0.6.0"
     val sl4j         = "2.0.12"
     val qrGen        = "1.4"
+    val quill        = "4.8.3"
+    val postgre      = "42.7.3"
+    val ulid         = "24.7.1"
   }
 
   object QR {
@@ -42,6 +46,11 @@ object Dependencies {
     lazy val schemaDerive = "dev.zio" %% "zio-schema-derivation" % Version.zioSchema
   }
 
+  object HTTP {
+    lazy val zhttp     = "dev.zio" %% "zio-http"  % Version.zioHttp
+    lazy val httpNetty = "io.netty" % "netty-all" % Version.netty
+  }
+
   object CONFIG {
     lazy val core     = "dev.zio" %% "zio-config"          % Version.zioConfig
     lazy val refined  = "dev.zio" %% "zio-config-refined"  % Version.zioConfig
@@ -57,8 +66,17 @@ object Dependencies {
     lazy val scalaLogging   = "com.typesafe.scala-logging" %% "scala-logging"      % Version.scalaLogging
   }
 
+  object STORAGE {
+    lazy val quill   = "io.getquill"   %% "quill-jdbc-zio" % Version.quill
+    lazy val postgre = "org.postgresql" % "postgresql"     % Version.postgre
+  }
+
   object CIRCE {
     lazy val core = "io.circe" %% "circe-core" % Version.circe
+  }
+
+  object UTILS {
+    lazy val ulid = "org.wvlet.airframe" %% "airframe-ulid" % Version.ulid
   }
 
   lazy val globalProjectDependencies = Seq(
@@ -79,11 +97,16 @@ object Dependencies {
     LOGS.zioLogging,
     LOGS.scalaLogging,
     LOGS.zioLoggingLf4j,
+    HTTP.zhttp,
+    HTTP.zhttp,
+    UTILS.ulid,
     CIRCE.core,
     CONFIG.core,
     CONFIG.refined,
     CONFIG.typesafe,
     CONFIG.magnolia,
+    STORAGE.quill,
+    STORAGE.postgre,
     TELEGRAM.canoe
   )
 }
