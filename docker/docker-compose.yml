@@ -1,1 +1,33 @@
-version: '3'services:  server:    build: .    container_name: TeleQRamer    environment:      - QR_CONFIG_WIDTH=250      - QR_CONFIG_HEIGHT=250      - REDIS_CONFIG_HOST=localhost      - REDIS_CONFIG_PORT=6379      - REDIS_CONFIG_SECRET=secret      - TELEGRAM_CONFIG_TOKEN=secret      - INTERFACE_CONFIG_HOST=localhost      - INTERFACE_CONFIG_PORT=9000    ports:      - "8082:8080"    depends_on:      - redis    networks:      - bot  redis:    image: 'bitnami/redis:latest'    container_name: RedisServer    ports:      - "6379:6379"    command: redis-server --requirepass secret    networks:      - botnetworks:  bot:    driver: bridge
+version: '3'
+services:
+  server:
+    build: .
+    container_name: TeleQRamer
+    environment:
+      - QR_CONFIG_WIDTH=250
+      - QR_CONFIG_HEIGHT=250
+      - REDIS_CONFIG_HOST=localhost
+      - REDIS_CONFIG_PORT=6379
+      - REDIS_CONFIG_SECRET=secret
+      - TELEGRAM_CONFIG_TOKEN=secret
+      - INTERFACE_CONFIG_HOST=localhost
+      - INTERFACE_CONFIG_PORT=9000
+    ports:
+      - "8082:8080"
+    depends_on:
+      - redis
+    networks:
+      - bot
+
+  redis:
+    image: 'bitnami/redis:latest'
+    container_name: RedisServer
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass secret
+    networks:
+      - bot
+
+networks:
+  bot:
+    driver: bridge

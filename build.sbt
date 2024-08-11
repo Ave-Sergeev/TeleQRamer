@@ -20,8 +20,10 @@ resolvers ++= List(
 )
 
 lazy val root = (project in file("."))
-  .enablePlugins(PackPlugin)
+  .enablePlugins(PackPlugin) // For those who like to use sbt-pack
   .enablePlugins(ScalafixPlugin)
+  .enablePlugins(JavaAppPackaging) // For those who like to use sbt-native-packager
+  .enablePlugins(DockerPlugin)
   .settings(
     name         := projectName,
     version      := projectVersion,
