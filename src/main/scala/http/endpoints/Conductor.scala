@@ -8,14 +8,14 @@ import zio.{Scope, ZIO}
 
 object Conductor {
 
-  def routes: HttpApp[Shortener with Scope] =
+  val routes: Routes[Shortener with Scope, Nothing] =
     Routes(
       Method.GET / string("token") -> handler { (token: String, request: Request) =>
         handleREST(request) {
           for {
             longUrl <- Shortener.check(token).flatMap {
               case Some(url) => ZIO.succeed(url)
-              case None      => ZIO.fail(InternalException(s"Перенаправление невозможно"))
+              case None      => ZIO.fail(InternalException(s"Redirection not possible"))
             }
             url <- ZIO.fromEither(URL.decode(longUrl))
           } yield Response.redirect(url)
@@ -23,5 +23,4 @@ object Conductor {
       }
     )
       .handleError(exceptionHandler)
-      .toHttpApp
 }

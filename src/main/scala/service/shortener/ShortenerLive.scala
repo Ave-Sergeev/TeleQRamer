@@ -1,9 +1,8 @@
 package service.shortener
 
 import config.AppConfig
-import util.ULID
+import util.zio.ULID
 import zio.redis.Redis
-import zio.schema.DeriveSchema.gen
 import zio.{Config, Task, ZIO, ZLayer}
 
 final case class ShortenerLive(
@@ -15,11 +14,11 @@ final case class ShortenerLive(
 
   override def shorten(longUrl: String): Task[String] =
     checkInRedis(longUrl).flatMap {
-      case Some(value) =>
-        ZIO.succeed(value)
+      case Some(token) =>
+        ZIO.succeed(token)
       case None =>
         for {
-          token <- ULID.nextULIDString
+          token <- ULID.newEffectULIDString
           // TODO: Две записи в редис - для поиска при создании и редиректе (временно)
           _ <- setToRedis(longUrl, token) zipPar setToRedis(token, longUrl)
         } yield token
@@ -32,14 +31,14 @@ final case class ShortenerLive(
       .get(url)
       .returning[String]
       .flatMap {
-        case Some(value) => ZIO.succeed(Some(value))
-        case None        => ZIO.succeed(None)
+        case Some(token) => ZIO.some(token)
+        case None        => ZIO.none
       }
 }
 
 object ShortenerLive {
 
-  val layer: ZLayer[Redis, Config.Error, ShortenerLive] = ZLayer.fromZIO {
+  val layer: ZLayer[Redis, Config.Error, Shortener] = ZLayer.fromZIO {
     for {
       config <- AppConfig.get
       redis  <- ZIO.service[Redis]

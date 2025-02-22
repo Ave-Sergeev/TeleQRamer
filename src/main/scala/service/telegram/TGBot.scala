@@ -13,5 +13,6 @@ trait TGBot {
 }
 
 object TGBot {
-  val live: ZLayer[CanoeClient with QR with Shortener, Config.Error, TGBot] = TGBotLive.layer
+  val live: ZLayer[CanoeClient with QR with Shortener, Config.Error, TGBot] =
+    TGBotLive.layer
 }

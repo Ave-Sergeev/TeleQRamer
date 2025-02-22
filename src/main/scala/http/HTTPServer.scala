@@ -12,7 +12,7 @@ object HTTPServer {
 
   private val allRoutes = Health.routes ++ Conductor.routes
 
-  def start: URIO[Scope with Server with Shortener, Nothing] = Server.serve(allRoutes)
+  def start: URIO[Shortener with Scope with Server, Nothing] = Server.serve(allRoutes)
 
   private val nettyConfigLayer = ZLayer.succeed(
     NettyConfig.default

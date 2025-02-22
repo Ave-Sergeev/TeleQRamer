@@ -32,7 +32,7 @@ final case class TGBotLive(
       _    <- repeat(chat)
     } yield ()
 
-  private def repeat(chat: Chat): Scenario[Task, Unit] = {
+  private def repeat(chat: Chat): Scenario[Task, Unit] =
     for {
       // TODO: Можно генерировать QR из shortURL (на будущее)
       _       <- Scenario.eval(chat.send(s"Введите URL"))
@@ -43,7 +43,6 @@ final case class TGBotLive(
       _       <- Scenario.eval(chat.send("Наведите камеру и сканируйте QR-код"))
       _       <- Scenario.eval(chat.send(s"Short URL: ${createShortUrl(token)}")) >> repeat(chat)
     } yield ()
-  }
 
   private val createShortUrl = (token: String) => s"${config.urlDomain}/$token"
 }

@@ -3,8 +3,7 @@ package http.endpoints
 import zio.http._
 
 object Health {
-  def routes: HttpApp[Any] =
-    Routes(
-      Method.GET / "health" -> handler(Response(Status.Ok))
-    ).toHttpApp
+  val routes: Routes[Any, Nothing] = Routes(
+    Method.GET / "health" -> Handler.ok
+  )
 }

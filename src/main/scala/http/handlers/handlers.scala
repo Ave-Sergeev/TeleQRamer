@@ -1,7 +1,7 @@
 package http
 
 import exception.Exceptions._
-import util.ULID
+import util.zio.ULID
 import zio.http.{Request, Response}
 import zio.{RIO, Scope, ZIO, ZIOAspect}
 
@@ -15,7 +15,7 @@ package object handlers {
     val path = s"${request.method} ${request.url.path}"
 
     for {
-      traceId <- ULID.nextULIDString
+      traceId <- ULID.newEffectULIDString
       annotations = ZIOAspect.annotated(
         "method"  -> path,
         "traceId" -> traceId

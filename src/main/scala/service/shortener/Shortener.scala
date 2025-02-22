@@ -11,5 +11,5 @@ trait Shortener {
 }
 
 object Shortener {
-  val live: ZLayer[Redis, Config.Error, ShortenerLive] = ShortenerLive.layer
+  val live: ZLayer[Redis, Config.Error, Shortener] = ShortenerLive.layer
 }
